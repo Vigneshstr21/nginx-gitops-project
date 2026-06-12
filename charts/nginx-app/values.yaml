@@ -1,0 +1,10 @@
+replicaCount: 1
+
+image:
+  repository: local-registry.registry.svc.cluster.local:5000/my-nginx
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
