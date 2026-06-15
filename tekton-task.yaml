@@ -1,0 +1,18 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: build-and-push-nginx
+  namespace: default
+spec:
+  workspaces:
+    - name: source-dir
+  steps:
+    - name: build-and-push
+      image: gcr.io/kaniko-project/executor:v1.20.0
+      args:
+        # 🎯 Kaniko now reads directly from the standard Tekton workspace path
+        - "--context=$(workspaces.source-dir.path)"
+        - "--dockerfile=$(workspaces.source-dir.path)/Dockerfile"
+        - "--destination=public.ecr.aws/a7f8v0m1/nginx-gitops:latest"
+        - "--insecure"
+        - "--skip-tls-verify"

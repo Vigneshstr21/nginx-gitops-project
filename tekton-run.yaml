@@ -1,0 +1,21 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: nginx-build-run- 
+  namespace: default
+spec:
+  workspaces:
+    - name: source-dir
+      # Instead of an emptyDir or hostPath, we plug in your ConfigMap files!
+      configMap:
+        name: app-source-files
+  pipelineSpec:
+    workspaces:
+      - name: source-dir
+    tasks:
+      - name: build-the-nginx-image
+        workspaces:
+          - name: source-dir
+            workspace: source-dir
+        taskRef:
+          name: build-and-push-nginx

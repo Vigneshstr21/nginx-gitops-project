@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nginx-gitops-app
+  namespace: argocd
+spec:
+  project: default
+  source:
+    # CHANGE THIS to your actual GitHub URL
+    repoURL: 'https://github.com/Vigneshstr21/nginx-gitops-project.git'
+    targetRevision: HEAD
+    path: charts/nginx-app # Points to your Helm folder inside the repo
+  destination:
+    server: 'https://kubernetes.default.svc' # Deploys to your local cluster
+    namespace: default # Deploys into the default namespace
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
