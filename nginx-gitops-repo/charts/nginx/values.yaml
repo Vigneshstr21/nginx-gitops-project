@@ -1,0 +1,10 @@
+replicaCount: 2
+
+image:
+  repository: 307711586752.dkr.ecr.ap-south-1.amazonaws.com/nginx-app
+  tag: latest # This will be overwritten by Tekton
+  pullPolicy: IfNotPresent
+
+service:
+  type: LoadBalancer
+  port: 80
